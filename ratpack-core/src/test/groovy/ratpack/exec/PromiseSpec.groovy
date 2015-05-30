@@ -16,6 +16,7 @@
 
 package ratpack.exec
 
+import ratpack.func.Function
 import ratpack.test.exec.ExecHarness
 import spock.lang.Specification
 
@@ -34,5 +35,21 @@ class PromiseSpec extends Specification {
     then:
     def e = thrown ExecutionException
     e.message.startsWith("Promise.then() can only be called on a compute thread")
+  }
+
+  def "retry"() {
+    given:
+    ratpack.func.Factory factory = Mock(ratpack.func.Factory)
+    1 * factory.create() >> { throw new IllegalArgumentException() }
+    1 * factory.create() >> { throw new IllegalArgumentException() }
+    1 * factory.create() >> { 'hi' }
+
+    when:
+    def result = exec.yield {
+      exec.promiseFrom(factory).retry(5)
+    }
+
+    then:
+    result.value == 'hi'
   }
 }

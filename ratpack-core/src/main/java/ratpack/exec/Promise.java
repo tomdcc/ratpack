@@ -885,4 +885,6 @@ public interface Promise<T> {
     return throttle.throttle(this);
   }
 
+  Promise<T> retry(int times);
+
 }

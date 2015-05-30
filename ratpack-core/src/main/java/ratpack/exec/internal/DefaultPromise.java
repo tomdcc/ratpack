@@ -116,4 +116,19 @@ public class DefaultPromise<T> implements Promise<T> {
     return resultReference.get().getValueOrThrow();
   }
 
+  public Promise<T> retry(int times) {
+    ExecControl control = ExecControl.current();
+    return control.<T>promise((f) -> doRetry(times, f));
+  }
+
+  private void doRetry(int times, Fulfiller<T> fulfiller) {
+    result( r -> {
+      if (r.isSuccess() || times - 1 < 0) {
+        fulfiller.accept(r);
+      } else {
+        doRetry(times - 1, fulfiller);
+      }
+    });
+  }
+
 }
