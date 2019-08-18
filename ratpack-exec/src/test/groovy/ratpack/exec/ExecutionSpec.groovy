@@ -453,7 +453,7 @@ class ExecutionSpec extends Specification {
     latch.await()
 
     then:
-    labels as Set == ['0', 'foo', '2'] as Set
+    labels as Set == ['0-1', 'foo', '2-3'] as Set
   }
 
   def "execution label can be reset to default before start"() {
@@ -471,7 +471,7 @@ class ExecutionSpec extends Specification {
     latch.await()
 
     then:
-    labels == ['0', 'bar']
+    labels == ['0-1', 'bar']
   }
 
   def "cannot set execution label to null after start"() {

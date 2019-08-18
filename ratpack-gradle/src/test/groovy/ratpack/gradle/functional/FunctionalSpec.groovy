@@ -162,7 +162,7 @@ abstract class FunctionalSpec extends Specification {
       }
     }
 
-    if (!latch.await(15, TimeUnit.SECONDS)) {
+    if (!latch.await(15a, TimeUnit.SECONDS)) {
       throw new RuntimeException("Timeout waiting for application to start")
     }
 

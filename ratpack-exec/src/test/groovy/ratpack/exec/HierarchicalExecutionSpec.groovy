@@ -123,10 +123,10 @@ class HierarchicalExecutionSpec extends BaseExecutionSpec {
     exec {
       it.fork()
         .register {
-        it.add(ExecInitializer, {
-          events << (it.parent == Execution.current().ref).toString()
-        } as ExecInitializer)
-      }.start {
+          it.add(ExecInitializer, {
+            events << (it.parent == Execution.current().ref).toString()
+          } as ExecInitializer)
+        }.start {
         latch.countDown()
       }
     }
@@ -167,6 +167,7 @@ class HierarchicalExecutionSpec extends BaseExecutionSpec {
     }
 
     then:
-    labels as Set == ['0', 'foo', '2'] as Set
+    labels as Set == ['1-0', 'foo', '1-2'] as Set
   }
+
 }

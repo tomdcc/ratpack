@@ -178,8 +178,8 @@ public interface Execution extends MutableRegistry {
   /**
    * A ref to the execution that forked this execution.
    *
-   * @throws IllegalStateException if this is a top level exception with no parent
    * @return a ref to the execution that forked this execution
+   * @throws IllegalStateException if this is a top level exception with no parent
    * @see #maybeParent()
    * @since 1.6
    */
@@ -293,7 +293,7 @@ public interface Execution extends MutableRegistry {
    * That way, the interceptor can interceptor all of the execution.
    *
    * @param execInterceptor the execution interceptor to add
-   * @param continuation the rest of the code to be executed
+   * @param continuation    the rest of the code to be executed
    * @throws Exception any thrown by {@code continuation}
    * @see ExecInterceptor
    */
@@ -309,7 +309,7 @@ public interface Execution extends MutableRegistry {
    * The duration must be non-negative.
    *
    * @param duration the duration this execution should sleep for
-   * @param onWake the code to resume with upon awaking
+   * @param onWake   the code to resume with upon awaking
    * @since 1.5
    */
   static void sleep(Duration duration, Block onWake) {

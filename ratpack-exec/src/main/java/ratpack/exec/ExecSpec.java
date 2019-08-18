@@ -134,6 +134,7 @@ public interface ExecSpec {
    *
    * @param label The label to use for the execution.
    * @return {@code this}
+   * @since 2.0.0
    */
   ExecSpec label(CharSequence label);
 }
