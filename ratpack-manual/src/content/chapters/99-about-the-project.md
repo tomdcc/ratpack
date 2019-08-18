@@ -90,6 +90,7 @@ The following people have provided significant contributions.
 * [Matthew Kavanagh](https://github.com/mkavanagh)
 * [Jason Terhune-Wold](https://github.com/jterhune)
 * [Jon Bevan](https://github.com/jdbevan)
+* [Michael Shclies](https://github.com/michaelschlies)
 
 ### Past project members
 
