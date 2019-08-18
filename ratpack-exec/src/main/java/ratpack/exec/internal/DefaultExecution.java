@@ -449,7 +449,7 @@ public class DefaultExecution implements Execution {
   }
 
   int nextChild() {
-    return childCounter.getAndIncrement();
+    return this.childCounter.getAndIncrement();
   }
 
   private class SingleEventExecStream extends BaseExecStream implements Continuation {
@@ -651,7 +651,7 @@ public class DefaultExecution implements Execution {
     }
   }
 
-  static final class Ref implements ExecutionRef {
+  private static final class Ref implements ExecutionRef {
 
     DefaultExecution execution;
     private final ExecutionRef parent;
@@ -687,6 +687,16 @@ public class DefaultExecution implements Execution {
     public boolean isComplete() {
       Execution execution = this.execution;
       return execution == null || execution.isComplete();
+    }
+
+    @Override
+    public int nextChild() {
+      return execution.nextChild();
+    }
+
+    @Override
+    public CharSequence getLabel() {
+      return execution.getLabel();
     }
 
     @Override

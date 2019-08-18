@@ -64,4 +64,7 @@ public interface ExecutionRef extends Registry {
    */
   boolean isComplete();
 
+  int nextChild();
+
+  CharSequence getLabel();
 }

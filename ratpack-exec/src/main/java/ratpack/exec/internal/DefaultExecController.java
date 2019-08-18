@@ -196,7 +196,7 @@ public class DefaultExecController implements ExecControllerInternal {
       @Override
       public void start(Action<? super Execution> initialExecutionSegment) {
         DefaultExecution current = DefaultExecution.get();
-        DefaultExecution execution = createExecution(initialExecutionSegment, current == null ? null : current.getRef());
+        DefaultExecution execution = createExecution(initialExecutionSegment, current);
         if (eventLoop.inEventLoop() && current == null) {
           execution.drain();
         } else {
@@ -204,7 +204,8 @@ public class DefaultExecController implements ExecControllerInternal {
         }
       }
 
-      private DefaultExecution createExecution(Action<? super Execution> initialExecutionSegment, DefaultExecution.Ref parentRef) {
+      private DefaultExecution createExecution(Action<? super Execution> initialExecutionSegment, DefaultExecution parentExecution) {
+        ExecutionRef parentRef = parentExecution == null ? null : parentExecution.getRef();
         try {
           return new DefaultExecution(
             DefaultExecController.this,
@@ -222,16 +223,16 @@ public class DefaultExecController implements ExecControllerInternal {
         }
       }
 
-      private CharSequence getLabel(DefaultExecution.Ref parentRef) {
+      private CharSequence getLabel(ExecutionRef parentRef) {
         // always call these as we want to increment the counters regardless of whether
         // an explicit label has been set
-        int forkedExecutionNumber;
+        String forkedExecutionNumber;
         if (parentRef != null) {
-          forkedExecutionNumber = parentRef.execution.nextChild();
+          forkedExecutionNumber = String.valueOf(parentRef.getLabel().subSequence(2, 3)).concat("-").concat(String.valueOf(parentRef.nextChild()));
         } else {
-          forkedExecutionNumber = topLevelExecutionCounter.getAndIncrement();
+          forkedExecutionNumber = String.valueOf(topLevelExecutionCounter.getAndIncrement()).concat("-").concat(String.valueOf(topLevelExecutionCounter.get()));
         }
-        return maybeLabel.orElse(String.valueOf(forkedExecutionNumber));
+        return maybeLabel.orElse(forkedExecutionNumber);
       }
     };
   }
