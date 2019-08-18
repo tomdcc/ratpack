@@ -64,7 +64,19 @@ public interface ExecutionRef extends Registry {
    */
   boolean isComplete();
 
+  /**
+   * A call to get the next child thread id
+   *
+   * @return
+   * @since 2.0.0
+   */
   int nextChild();
 
+  /**
+   * A call to get the label of the current ExecutionRef
+   *
+   * @return CharSequence of label inside ExecutionRef or its properties
+   * @since 2.0.0
+   */
   CharSequence getLabel();
 }
